@@ -1,6 +1,8 @@
 # a load of functions that I expect to reuse
 import pandas as pd
 import datetime as dt
+import matplotlib.pyplot as plt
+import seaborn as sns
 # reading csv files
 def read_csv(filepath, header, columns, dates):
     df_loc = pd.read_csv(filepath, header=(header),
@@ -57,4 +59,13 @@ def scatterPlt(x,y):
     ax.yaxis.update_units(y)
     #plot the graph
     sns.regplot(x=ax.xaxis.convert_units(x), y=ax.yaxis.convert_units(y))
+    plt.show()
+    return
+
+#plot boxplots
+def plot_boxplots(x,y):
+    f, ax = plt.subplots()
+    ax.yaxis.update_units(y)
+    #sns.boxplot(x=x,y=ax.yaxis.convert_units(y))
+    sns.boxplot(x=x, y=y)
     return
