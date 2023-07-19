@@ -63,9 +63,15 @@ def scatterPlt(x,y):
     return
 
 #plot boxplots
-def plot_boxplots(x,y):
-    f, ax = plt.subplots()
-    ax.yaxis.update_units(y)
-    sns.boxplot(x=x,y=ax.yaxis.convert_units(y))
+def plot_boxplots(y):
+
+    sns.boxplot(y=y)
     #sns.boxplot(x=x, y=y)
     return
+
+#def plot_boxplots(x,y):
+#    f, ax = plt.subplots()
+#    ax.yaxis.update_units(y)
+#    sns.boxplot(x=x,y=ax.yaxis.convert_units(y))
+    #sns.boxplot(x=x, y=y)
+#    return
