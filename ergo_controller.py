@@ -38,7 +38,6 @@ all_workouts = {
 # timed_workouts=("30:00 row",)
 # all_workouts = timed_workouts+distance_workouts
 
-
 #print some basic stats to the screen
 
 #Call a function that returns all the basic stats for distance workouts
@@ -57,7 +56,7 @@ time_array=functions.prepDataPlt(distanceResults['Work Time (Seconds)'])
 #now plot it
 functions.scatterPlt(distanceResults['Date'],time_array)
 #need to make this a function, but will do fixed time workouts and histograms first
-df3=df.loc[df['Description']==chosen_workout]
+df3=df.loc[df['Description']==workout]
 workout_description = df3['Description']
 # df2['Work Time (Seconds)']=df2['Work Time (Seconds)'].apply(pd.to_datetime,unit = 's')
 work_time = df3['Work Time (Seconds)'].apply(pd.to_datetime,unit = 's')
@@ -65,22 +64,23 @@ work_time = df3['Work Time (Seconds)'].apply(pd.to_datetime,unit = 's')
 # plot box plots
 functions.plot_boxplots(work_time)
 
+
 #create a scatter plot for 30min workouts
 #create the right data array
-df4=df.loc[df['Description'].isin(timed_workouts)]
+#df4=df.loc[df['Description'].isin(timed_workouts)]
 #now plot it
-functions.scatterPlt(df4['Date'],df4['Work Distance'])
+#functions.scatterPlt(df4['Date'],df4['Work Distance'])
 #now get the box plot for fixed time.  Again, should be a function, but for now...
-y=df4['Work Distance']
-f, ax = plt.subplots()
-ax.yaxis.update_units(y)
-sns.boxplot(y=ax.yaxis.convert_units(y))
+#y=df4['Work Distance']
+#f, ax = plt.subplots()
+#ax.yaxis.update_units(y)
+#sns.boxplot(y=ax.yaxis.convert_units(y))
 #get a histogram of timed + distance workouts over all time
 #this line creates a df containing only the lines I'm interested in
-df5=df.loc[df['Description'].isin(all_workouts)]
+#df5=df.loc[df['Description'].isin(all_workouts)]
 #create new column which extracts the year from the date column
-df5['Year'] = df5['Date'].dt.strftime('%Y')
+#df5['Year'] = df5['Date'].dt.strftime('%Y')
 #print(df4['Year'].value_counts(sort=False, ascending=True))
 #playing around now, extract only the workouts for a given year (2021 as orig written)
 #df5=df4.loc[df4['Year']=='2021']
-df6= df5.groupby(['Year','Description'])['Description'].count()
+#df6= df5.groupby(['Year','Description'])['Description'].count()
