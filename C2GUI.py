@@ -30,8 +30,11 @@ while True:
        #slightly different approach for timed and distance workouts
        if chosen_workout != "30min":
           fastest, median, mean = functions.distance_stats(filteredResults, workout)
-          # print to screen NEED TO ADAPT TO PRINT TO GUI
-          functions.printStatsDist(fastest, median, mean, workout)
+          # write basic stats to GUI
+          msg = f"Fastest time for {workout} is {fastest}\n" \
+                f"Median time for {workout} is {median}\n" \
+                f"Mean time for {workout} is {mean}"
+          window['-MSG-'].update(msg)
           # get a scatter plot for the chosen workout
           # first get the data ready -> convert time from float to time
           time_array = functions.prepDataPlt(filteredResults['Work Time (Seconds)'])
@@ -51,9 +54,6 @@ while True:
           #get box plots
           functions.plot_boxplots(filteredResults['Work Distance'])
        break
-
-#code to execute controller
-#will need to modify controller such that it only deals with selected workout
 
 
 window.close()
