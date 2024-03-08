@@ -3,12 +3,37 @@ import pandas as pd
 import datetime as dt
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os.path
 # reading csv files
 def read_csv(filepath, header, columns, dates):
-    df_loc = pd.read_csv(filepath, header=(header),
+    df = pd.read_csv(filepath, header=(header),
                usecols = columns, parse_dates=dates)
-    return df_loc
+    last_file_entry = check_last_date(df)
+    update_record(df, last_file_entry)
+    return df
 
+# Create a CSV if one doesn't already exist, append otherwise
+def update_record(df_new, last_file_entry):
+    filepath = r'C:\Users\johnb\My Drive\Colab Notebooks\Total_log.csv'
+    if os.path.isfile(filepath):
+        df_rec = pd.read_csv(filepath, parse_dates=['Date'])
+        last_record_entry = check_last_date(df_rec)
+        if last_record_entry <= last_file_entry:
+            #filter and append new entries to df_rec
+            df_filtered = df_new.loc[(df_new['Date'] >= last_record_entry)]
+            #need to manage this by column names I think
+            updated_df = pd.concat([df_rec, df_filtered], axis=0)
+            updated_df.sort_values(by='Date', inplace = True)
+            updated_df.to_csv(r'C:\Users\johnb\My Drive\Colab Notebooks\Total_log.csv',index = False)
+
+    else:
+        df_new.to_csv(r'C:\Users\johnb\My Drive\Colab Notebooks\Total_log.csv',index = False)
+    return
+
+# check the latest date in a dateframe
+def check_last_date(dataframe):
+    max_date = dataframe['Date'].max()
+    return max_date
 
 # function to pull distance workout records from the overall dataframe
 # not sure I've got this right...as written it can only deal with one element from
@@ -69,3 +94,7 @@ def plot_boxplots(y):
     sns.boxplot(y=ax.yaxis.convert_units(y))
     plt.show()
     return
+
+
+
+
